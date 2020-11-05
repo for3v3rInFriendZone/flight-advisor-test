@@ -1,12 +1,13 @@
 package com.flight.advisor.api;
 
 import com.flight.advisor.converters.CityConverter;
+import com.flight.advisor.dto.city.CityResponse;
 import com.flight.advisor.dto.city.CreateCityRequest;
 import com.flight.advisor.dto.city.CreateCityResponse;
-import com.flight.advisor.exception.city.CityNotFoundException;
 import com.flight.advisor.model.City;
-import com.flight.advisor.repository.CityRepository;
 import com.flight.advisor.service.city.CreateCity;
+import com.flight.advisor.service.city.GetAllCities;
+import com.flight.advisor.service.city.GetCityById;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/city")
@@ -30,6 +33,15 @@ public class CityApi {
     private String createCityLink;
 
     private final CreateCity createCity;
+    private final GetCityById getCityById;
+    private final GetAllCities getAllCities;
+
+    @GetMapping
+    public List<CityResponse> findAllCities() {
+        return getAllCities.execute().stream()
+                .map(CityConverter::toCityResponse)
+                .collect(Collectors.toList());
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -37,5 +49,10 @@ public class CityApi {
         final City createdCity = createCity.execute(CityConverter.toCityFromCreateRequest(createCityRequest));
 
         return CityConverter.toCreateCityResponse(createdCity.getId(), createCityLink);
+    }
+
+    @GetMapping("/{id}")
+    public City getCityById(@PathVariable UUID id) {
+        return getCityById.execute(id);
     }
 }

@@ -7,17 +7,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class CreateCity {
+public class GetAllCities {
 
     private final CityRepository cityRepository;
 
-    public City execute(City city) {
-        log.info("Trying to create city: {}", city.getName());
-
-        return cityRepository.save(city);
+    public List<City> execute() {
+        return cityRepository.findAll();
     }
 }

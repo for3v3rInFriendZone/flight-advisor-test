@@ -1,5 +1,6 @@
 package com.flight.advisor.converters;
 
+import com.flight.advisor.dto.city.CityResponse;
 import com.flight.advisor.dto.city.CreateCityRequest;
 import com.flight.advisor.dto.city.CreateCityResponse;
 import com.flight.advisor.model.City;
@@ -24,6 +25,14 @@ public class CityConverter {
                 .name(createCityRequest.getName())
                 .country(createCityRequest.getCountry())
                 .description(createCityRequest.getDescription())
+                .build();
+    }
+
+    public CityResponse toCityResponse(City city) {
+        return CityResponse.builder()
+                .id(city.getId())
+                .name(city.getName())
+                .country(city.getCountry())
                 .build();
     }
 }
