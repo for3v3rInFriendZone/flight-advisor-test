@@ -1,6 +1,6 @@
 package com.flight.advisor.dto.city;
 
-import com.flight.advisor.model.Comment;
+import com.flight.advisor.dto.comment.CommentResponse;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,5 +17,5 @@ public class CityResponse {
 
     private String country;
 
-    private List<Comment> comments;
+    private List<CommentResponse> comments;
 }

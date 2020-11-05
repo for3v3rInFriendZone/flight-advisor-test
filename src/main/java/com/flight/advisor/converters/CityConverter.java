@@ -3,9 +3,11 @@ package com.flight.advisor.converters;
 import com.flight.advisor.dto.city.CityResponse;
 import com.flight.advisor.dto.city.CreateCityRequest;
 import com.flight.advisor.dto.city.CreateCityResponse;
+import com.flight.advisor.dto.comment.CommentResponse;
 import com.flight.advisor.model.City;
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
 import java.util.UUID;
 
 @UtilityClass
@@ -25,7 +27,7 @@ public class CityConverter {
                 .build();
     }
 
-    public CityResponse toCityResponse(City city) {
+    public CityResponse toCityResponse(City city, List<CommentResponse> comments) {
         return CityResponse.builder()
                 .id(city.getId())
                 .name(city.getName())
