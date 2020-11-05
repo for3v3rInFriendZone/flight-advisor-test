@@ -1,9 +1,14 @@
 package com.flight.advisor.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Entity
 @Getter
@@ -11,7 +16,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
     private String firstName;
 
@@ -20,4 +25,14 @@ public class User extends BaseEntity{
     private String username;
 
     private String password;
+
+    @Enumerated(value = EnumType.STRING)
+    private UserType type;
+
+    public enum UserType {
+        ADMIN,
+        REGULAR
+    }
 }
+
+
