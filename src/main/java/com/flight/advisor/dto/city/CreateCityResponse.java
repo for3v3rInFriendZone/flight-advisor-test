@@ -10,6 +10,4 @@ import java.util.UUID;
 public class CreateCityResponse {
 
     private UUID id;
-
-    private String link;
 }

@@ -9,6 +9,8 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -24,4 +26,17 @@ public class Comment extends BaseEntity {
     private ZonedDateTime createdDate;
 
     private ZonedDateTime modifiedDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private City city;
+
+    @PrePersist
+    private void prePersist() {
+        createdDate = ZonedDateTime.now();
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        modifiedDate = ZonedDateTime.now();
+    }
 }

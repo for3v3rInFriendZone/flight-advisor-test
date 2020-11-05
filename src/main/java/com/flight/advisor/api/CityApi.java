@@ -1,16 +1,21 @@
 package com.flight.advisor.api;
 
 import com.flight.advisor.converters.CityConverter;
+import com.flight.advisor.converters.CommentConverter;
 import com.flight.advisor.dto.city.CityResponse;
 import com.flight.advisor.dto.city.CreateCityRequest;
 import com.flight.advisor.dto.city.CreateCityResponse;
+import com.flight.advisor.dto.comment.CreateCommentRequest;
+import com.flight.advisor.dto.comment.CreateCommentResponse;
 import com.flight.advisor.model.City;
+import com.flight.advisor.model.Comment;
 import com.flight.advisor.service.city.CreateCity;
 import com.flight.advisor.service.city.GetAllCities;
 import com.flight.advisor.service.city.GetCityById;
+import com.flight.advisor.service.comment.CreateComment;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,12 +34,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CityApi {
 
-    @Value("${create.city.link}")
-    private String createCityLink;
-
     private final CreateCity createCity;
     private final GetCityById getCityById;
     private final GetAllCities getAllCities;
+    private final CreateComment createComment;
 
     @GetMapping
     public List<CityResponse> findAllCities() {
@@ -48,11 +51,21 @@ public class CityApi {
     public CreateCityResponse createCity(@RequestBody @Valid CreateCityRequest createCityRequest) {
         final City createdCity = createCity.execute(CityConverter.toCityFromCreateRequest(createCityRequest));
 
-        return CityConverter.toCreateCityResponse(createdCity.getId(), createCityLink);
+        return CityConverter.toCreateCityResponse(createdCity.getId());
     }
 
     @GetMapping("/{id}")
-    public City getCityById(@PathVariable UUID id) {
-        return getCityById.execute(id);
+    public CityResponse getCityById(@PathVariable UUID id) {
+        final City city = getCityById.execute(id);
+
+        return CityConverter.toCityResponse(city);
+    }
+
+    @PostMapping("/{cityId}/comment")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CreateCommentResponse createComment(@PathVariable UUID cityId, @RequestBody @Valid CreateCommentRequest createCommentRequest) {
+        final Comment newComment = createComment.execute(CommentConverter.toCommentFromCreateComment(createCommentRequest), cityId);
+
+        return CommentConverter.toCreateCommentResponse(newComment);
     }
 }

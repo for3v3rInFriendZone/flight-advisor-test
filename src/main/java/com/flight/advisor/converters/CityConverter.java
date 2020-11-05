@@ -11,12 +11,9 @@ import java.util.UUID;
 @UtilityClass
 public class CityConverter {
 
-    public CreateCityResponse toCreateCityResponse(final UUID cityId, String link) {
-        final String fullLink = String.format(link, cityId.toString());
-
+    public CreateCityResponse toCreateCityResponse(final UUID cityId) {
         return CreateCityResponse.builder()
                 .id(cityId)
-                .link(fullLink)
                 .build();
     }
 
