@@ -32,6 +32,7 @@ public class CityConverter {
                 .id(city.getId())
                 .name(city.getName())
                 .country(city.getCountry())
+                .comments(comments)
                 .build();
     }
 }

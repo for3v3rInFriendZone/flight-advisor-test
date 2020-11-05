@@ -37,7 +37,7 @@ public class CityApi {
     private final GetAllCitiesWithComments getAllCitiesWithComments;
 
     @GetMapping
-    public List<CityResponse> findAllCities(@RequestParam Integer commentsLimit) {
+    public List<CityResponse> findAllCities(@RequestParam(required = false) Integer commentsLimit) {
         return getAllCitiesWithComments.execute(commentsLimit);
     }
 
@@ -49,10 +49,10 @@ public class CityApi {
         return CityConverter.toCreateCityResponse(createdCity.getId());
     }
 
-    @GetMapping
-    public List<CityResponse> findAllCitiesByName(@RequestParam String name) {
-
-    }
+//    @GetMapping
+//    public List<CityResponse> findAllCitiesByName(@RequestParam String name) {
+//        return null;
+//    }
 
     @PostMapping("/{cityId}/comment")
     @ResponseStatus(HttpStatus.CREATED)

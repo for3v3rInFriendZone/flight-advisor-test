@@ -8,6 +8,10 @@ import java.util.List;
 
 public interface CommentRepository extends BaseRepository<Comment> {
 
-    @Query(value = "SELECT * FROM comment WHERE city_id = :id ORDER BY created_date DESC LIMIT :limit", nativeQuery = true)
+    @Query(value = "" +
+            "SELECT * FROM comment " +
+            "WHERE city_id = :id " +
+            "ORDER BY created_date DESC " +
+            "LIMIT :limit", nativeQuery = true)
     List<Comment> findAllByCityId(String id, Integer limit);
 }
