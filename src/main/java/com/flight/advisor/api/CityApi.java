@@ -10,6 +10,7 @@ import com.flight.advisor.dto.comment.CreateCommentResponse;
 import com.flight.advisor.model.City;
 import com.flight.advisor.model.Comment;
 import com.flight.advisor.service.city.CreateCity;
+import com.flight.advisor.service.city.FindCitiesByNameWithComments;
 import com.flight.advisor.service.city.GetAllCitiesWithComments;
 import com.flight.advisor.service.comment.CreateComment;
 import lombok.RequiredArgsConstructor;
@@ -35,10 +36,17 @@ public class CityApi {
     private final CreateCity createCity;
     private final CreateComment createComment;
     private final GetAllCitiesWithComments getAllCitiesWithComments;
+    private final FindCitiesByNameWithComments findCitiesByNameWithComments;
 
     @GetMapping
-    public List<CityResponse> findAllCities(@RequestParam(required = false) Integer commentsLimit) {
+    public List<CityResponse> getAllCities(@RequestParam(required = false) Integer commentsLimit) {
         return getAllCitiesWithComments.execute(commentsLimit);
+    }
+
+    @GetMapping("/search")
+    public List<CityResponse> findAllCitiesByName(@RequestParam String name,
+                                                  @RequestParam(required = false) Integer commentsLimit) {
+        return findCitiesByNameWithComments.execute(name, commentsLimit);
     }
 
     @PostMapping
@@ -48,11 +56,6 @@ public class CityApi {
 
         return CityConverter.toCreateCityResponse(createdCity.getId());
     }
-
-//    @GetMapping
-//    public List<CityResponse> findAllCitiesByName(@RequestParam String name) {
-//        return null;
-//    }
 
     @PostMapping("/{cityId}/comment")
     @ResponseStatus(HttpStatus.CREATED)
