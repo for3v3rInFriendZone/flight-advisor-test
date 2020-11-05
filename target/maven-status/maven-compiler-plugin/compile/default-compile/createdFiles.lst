@@ -1,0 +1,13 @@
+com/flight/advisor/api/UserApi.class
+com/flight/advisor/model/Comment.class
+com/flight/advisor/model/BaseEntity.class
+com/flight/advisor/repository/UserRepository.class
+com/flight/advisor/repository/BaseRepository.class
+com/flight/advisor/model/Comment$CommentBuilder.class
+com/flight/advisor/model/User$UserBuilder.class
+com/flight/advisor/model/City.class
+com/flight/advisor/AdvisorApplication.class
+com/flight/advisor/model/City$CityBuilder.class
+com/flight/advisor/service/UserService.class
+com/flight/advisor/model/User.class
+com/flight/advisor/configuration/BeanConfiguration.class

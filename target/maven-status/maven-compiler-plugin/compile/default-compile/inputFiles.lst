@@ -1,0 +1,10 @@
+/Users/markostrisko/flight-advisor-test/src/main/java/com/flight/advisor/model/Comment.java
+/Users/markostrisko/flight-advisor-test/src/main/java/com/flight/advisor/repository/BaseRepository.java
+/Users/markostrisko/flight-advisor-test/src/main/java/com/flight/advisor/repository/UserRepository.java
+/Users/markostrisko/flight-advisor-test/src/main/java/com/flight/advisor/configuration/BeanConfiguration.java
+/Users/markostrisko/flight-advisor-test/src/main/java/com/flight/advisor/model/BaseEntity.java
+/Users/markostrisko/flight-advisor-test/src/main/java/com/flight/advisor/AdvisorApplication.java
+/Users/markostrisko/flight-advisor-test/src/main/java/com/flight/advisor/api/UserApi.java
+/Users/markostrisko/flight-advisor-test/src/main/java/com/flight/advisor/model/User.java
+/Users/markostrisko/flight-advisor-test/src/main/java/com/flight/advisor/service/UserService.java
+/Users/markostrisko/flight-advisor-test/src/main/java/com/flight/advisor/model/City.java
