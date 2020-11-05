@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
-public class CreateCommentRequest {
+public class UpdateCommentRequest {
 
     @NotBlank(message = "comment.text.blank")
     @Size(max = 1500, message = "comment.text.size")

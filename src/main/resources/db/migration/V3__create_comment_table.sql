@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS comment;
 CREATE TABLE comment
 (
     id           UUID PRIMARY KEY,
-    text         VARCHAR(250)             NOT NULL,
+    text         VARCHAR(1500)             NOT NULL,
     city_id      UUID                     NOT NULL,
     created_date  TIMESTAMP WITH TIME ZONE NOT NULL,
     modified_date TIMESTAMP WITH TIME ZONE,
