@@ -30,7 +30,6 @@ public class CityApi {
     private String createCityLink;
 
     private final CreateCity createCity;
-    private final CityRepository cityRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -38,11 +37,5 @@ public class CityApi {
         final City createdCity = createCity.execute(CityConverter.toCityFromCreateRequest(createCityRequest));
 
         return CityConverter.toCreateCityResponse(createdCity.getId(), createCityLink);
-    }
-
-    @GetMapping("/{id}")
-    public City getCityById(@PathVariable UUID id) {
-        return cityRepository.findById(id)
-                .orElseThrow(CityNotFoundException::new);
     }
 }
