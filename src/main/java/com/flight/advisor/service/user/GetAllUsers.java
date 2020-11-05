@@ -1,4 +1,4 @@
-package com.flight.advisor.service;
+package com.flight.advisor.service.user;
 
 import com.flight.advisor.model.User;
 import com.flight.advisor.repository.UserRepository;
@@ -9,11 +9,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class GetAllUsers {
 
     private final UserRepository userRepository;
 
-    public List<User> getUsers() {
+    public List<User> execute() {
         return userRepository.findAll();
     }
 }

@@ -21,4 +21,6 @@ public class City extends BaseEntity {
     private String name;
 
     private String country;
+
+    private String description;
 }
