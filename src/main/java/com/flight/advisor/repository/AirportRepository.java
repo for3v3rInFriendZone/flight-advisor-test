@@ -4,4 +4,8 @@ import com.flight.advisor.model.Airport;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AirportRepository extends JpaRepository<Airport, Integer> {
+
+    Airport findByIata(String iata);
+
+    Airport findByIcao(String icao);
 }

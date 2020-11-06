@@ -5,6 +5,8 @@ import com.flight.advisor.converters.CommentConverter;
 import com.flight.advisor.dto.city.CityResponse;
 import com.flight.advisor.dto.city.CreateCityRequest;
 import com.flight.advisor.dto.city.CreateCityResponse;
+import com.flight.advisor.dto.city.FlightRequest;
+import com.flight.advisor.dto.city.FlightResponse;
 import com.flight.advisor.dto.comment.CreateCommentRequest;
 import com.flight.advisor.dto.comment.CreateCommentResponse;
 import com.flight.advisor.model.City;
@@ -13,6 +15,11 @@ import com.flight.advisor.service.city.CreateCity;
 import com.flight.advisor.service.city.FindCitiesByNameWithComments;
 import com.flight.advisor.service.city.GetAllCitiesWithComments;
 import com.flight.advisor.service.comment.CreateComment;
+import es.usc.citius.hipster.algorithm.Hipster;
+import es.usc.citius.hipster.graph.GraphBuilder;
+import es.usc.citius.hipster.graph.GraphSearchProblem;
+import es.usc.citius.hipster.graph.HipsterDirectedGraph;
+import es.usc.citius.hipster.model.problem.SearchProblem;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -70,5 +77,33 @@ public class CityApi {
         final Comment newComment = createComment.execute(CommentConverter.toCommentFromCreateComment(createCommentRequest), cityId);
 
         return CommentConverter.toCreateCommentResponse(newComment);
+    }
+
+    @PostMapping("/flight")
+    @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
+    public List<FlightResponse> calculateCheapestFlight(FlightRequest flightRequest) {
+        HipsterDirectedGraph<String,Double> graph =
+                GraphBuilder.<String,Double>create()
+                        .connect("A").to("B").withEdge(3d)
+                        .connect("A").to("C").withEdge(5d)
+                        .connect("A").to("D").withEdge(10d)
+                        .connect("B").to("E").withEdge(8d)
+                        .connect("C").to("G").withEdge(2d)
+                        .connect("C").to("F").withEdge(10d)
+                        .connect("D").to("E").withEdge(3d)
+                        .connect("D").to("H").withEdge(2d)
+                        .connect("F").to("E").withEdge(1d)
+                        .connect("G").to("H").withEdge(3d)
+                        .connect("H").to("F").withEdge(4d)
+                        .connect("E").to("F").withEdge(4d)
+                        .createDirectedGraph();
+        SearchProblem p = GraphSearchProblem
+                .startingFrom("A")
+                .in(graph)
+                .takeCostsFromEdges()
+                .build();
+
+        System.out.println(Hipster.createDijkstra(p).search("F"));
+        return null;
     }
 }

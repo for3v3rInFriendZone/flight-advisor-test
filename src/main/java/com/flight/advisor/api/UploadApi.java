@@ -8,6 +8,7 @@ import com.flight.advisor.service.upload.routes.RouteDataHandler;
 import com.flight.advisor.service.upload.routes.RouteUploadModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,7 @@ public class UploadApi {
 
     @PostMapping("/airports")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userTypePermission.hasAny('ADMIN')")
     public void uploadAirports(@RequestParam MultipartFile file) {
         List<AirportUploadModel> uploadedAirports = airportDataHandler.execute(file);
 
@@ -37,6 +39,7 @@ public class UploadApi {
 
     @PostMapping("/routes")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userTypePermission.hasAny('ADMIN')")
     public void uploadRoutes(@RequestParam MultipartFile file) {
         List<RouteUploadModel> uploadedAirports = routeDataHandler.execute(file);
 
