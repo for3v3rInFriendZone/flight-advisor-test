@@ -3,6 +3,7 @@ package com.flight.advisor.exception;
 import com.flight.advisor.util.ResourceBundleResolver;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,4 +27,15 @@ public class CustomExceptionHandler {
         final ExceptionResponse response = new ExceptionResponse(localisedMessage, status.toString());
         return new ResponseEntity<>(response, status);
     }
+
+    @ExceptionHandler(value = {AccessDeniedException.class})
+    public ResponseEntity<ExceptionResponse> handleCustomExceptions(AccessDeniedException ade) {
+        final HttpStatus status = HttpStatus.FORBIDDEN;
+
+        final ExceptionResponse response = new ExceptionResponse(ade.getMessage(), status.toString());
+
+        return new ResponseEntity<>(response, status);
+    }
+
+
 }
