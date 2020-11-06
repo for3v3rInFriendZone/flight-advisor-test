@@ -1,6 +1,7 @@
 package com.flight.advisor.security;
 
 import com.flight.advisor.security.filter.JwsTokenFilter;
+import com.flight.advisor.security.jwt.JwsTokenUtils;
 import com.flight.advisor.security.service.SecurityUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final SecurityUserService securityUserService;
+    private final JwsTokenUtils jwsTokenUtils;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -36,7 +38,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
     }
 
     @Override
@@ -46,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     public JwsTokenFilter authenticationJwtTokenFilter() {
-        return new JwsTokenFilter();
+        return new JwsTokenFilter(jwsTokenUtils);
     }
 
     @Bean

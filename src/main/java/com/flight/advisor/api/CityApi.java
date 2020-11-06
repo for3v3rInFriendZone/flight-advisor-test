@@ -41,6 +41,7 @@ public class CityApi {
     private final FindCitiesByNameWithComments findCitiesByNameWithComments;
 
     @GetMapping
+    @PreAuthorize("@userTypePermission.hasAny('REGULAR')")
     public List<CityResponse> getAllCities(@RequestParam(required = false) Integer commentsLimit) {
         return getAllCitiesWithComments.execute(commentsLimit);
     }

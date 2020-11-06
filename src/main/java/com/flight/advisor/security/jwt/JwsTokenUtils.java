@@ -24,8 +24,8 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toSet;
 
 @Component
-@Slf4j
 @RequiredArgsConstructor
+@Slf4j
 public class JwsTokenUtils {
 
     private static final String USER_TYPE_CLAIM = "user_type";

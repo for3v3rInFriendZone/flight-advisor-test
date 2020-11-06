@@ -1,6 +1,7 @@
 package com.flight.advisor.security.filter;
 
 import com.flight.advisor.security.jwt.JwsTokenUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,11 +18,11 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Slf4j
 public class JwsTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwsTokenUtils jwsUtils;
+    private final JwsTokenUtils jwsUtils;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
