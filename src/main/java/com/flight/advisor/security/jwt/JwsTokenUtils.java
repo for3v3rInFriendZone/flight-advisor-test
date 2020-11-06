@@ -9,15 +9,18 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toSet;
 
 @Component
@@ -71,6 +74,13 @@ public class JwsTokenUtils {
 
         return false;
     }
+
+    public String generateUserTypeFromToken(Collection<? extends GrantedAuthority> authorities) {
+        return authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(joining(""));
+    }
+
 
     public Set<SimpleGrantedAuthority> getUserTypeFromJwsToken(String token) {
         final String userType = Jwts.parser().setSigningKey(tokenSecret)

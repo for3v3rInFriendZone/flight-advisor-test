@@ -10,5 +10,5 @@ CREATE TABLE user
 );
 
 INSERT INTO user (id, first_name, last_name, username, password, type)
-VALUES (random_uuid(), 'Aliko', 'Dangote', 'adsdsa', 'adassdsa', 'ADMIN'),
-       (random_uuid(), 'Bill', 'Gates', 'fqwfwf', 'qwdqwqw', 'ADMIN');
+VALUES (random_uuid(), 'Aliko', 'Dangote', 'root1', '$2a$10$zPVE2u6hin2m2XdYblh3sO1MhWcbJpWi1HPJsS1c3.lzX7P.jUelK', 'ADMIN'),
+       (random_uuid(), 'Bill', 'Gates', 'root2', '$2a$10$zPVE2u6hin2m2XdYblh3sO1MhWcbJpWi1HPJsS1c3.lzX7P.jUelK', 'ADMIN');
