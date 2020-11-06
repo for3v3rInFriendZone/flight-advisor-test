@@ -9,11 +9,15 @@ import com.flight.advisor.dto.comment.CreateCommentRequest;
 import com.flight.advisor.dto.comment.CreateCommentResponse;
 import com.flight.advisor.model.City;
 import com.flight.advisor.model.Comment;
+import com.flight.advisor.service.airport.CreateAirports;
 import com.flight.advisor.service.city.CreateCity;
 import com.flight.advisor.service.city.FindCitiesByNameWithComments;
 import com.flight.advisor.service.city.GetAllCitiesWithComments;
 import com.flight.advisor.service.comment.CreateComment;
+import com.flight.advisor.service.upload.airport.AirportDataHandler;
+import com.flight.advisor.service.upload.airport.AirportUploadModel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +28,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
@@ -33,12 +37,15 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/city")
 @RequiredArgsConstructor
+@Slf4j
 public class CityApi {
 
     private final CreateCity createCity;
     private final CreateComment createComment;
     private final GetAllCitiesWithComments getAllCitiesWithComments;
     private final FindCitiesByNameWithComments findCitiesByNameWithComments;
+    private final AirportDataHandler airportDataHandler;
+    private final CreateAirports createAirports;
 
     @GetMapping
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
@@ -69,5 +76,12 @@ public class CityApi {
         final Comment newComment = createComment.execute(CommentConverter.toCommentFromCreateComment(createCommentRequest), cityId);
 
         return CommentConverter.toCreateCommentResponse(newComment);
+    }
+
+    @PostMapping("/upload")
+    public void upload(@RequestParam MultipartFile file) {
+        List<AirportUploadModel> uploadedAirports = airportDataHandler.execute(file);
+
+        createAirports.execute(uploadedAirports);
     }
 }
