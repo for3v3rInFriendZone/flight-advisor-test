@@ -2,6 +2,7 @@ package com.flight.advisor.service.upload.airport;
 
 import com.flight.advisor.service.upload.GetDataFromFile;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AirportDataHandler {
 
     private static final int CITY_INDEX = 2;
@@ -19,6 +21,8 @@ public class AirportDataHandler {
     private final GetDataFromFile getDataFromFile;
 
     public List<AirportUploadModel> execute(MultipartFile file) {
+        log.info("Trying to upload airports from file...");
+
         return getDataFromFile.execute(file).stream()
                 .map(this::toAirportUploadModel)
                 .filter(Objects::nonNull)
