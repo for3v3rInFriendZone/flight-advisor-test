@@ -30,13 +30,6 @@ public class CreateRoutes {
     }
 
     private Route toRoute(RouteUploadModel routeUploadModel) {
-        try {
-            Integer.parseInt(routeUploadModel.getStops());
-            new BigDecimal(routeUploadModel.getPrice());
-        } catch (Exception e) {
-            log.info("dasad");
-        }
-
         return Route.builder()
                 .airlineCode(routeUploadModel.getAirlineCode())
                 .airlineId(routeUploadModel.getAirlineId())
