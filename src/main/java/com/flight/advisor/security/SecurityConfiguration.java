@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         http.csrf().disable();
-        http.headers().frameOptions().disable();
+        http.headers().frameOptions().disable(); // This is for H2 database, without it, web page breaks
 
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
