@@ -21,7 +21,7 @@ public class SaveRoute {
     @Async
     public void execute(RouteUploadModel uploadModel) {
         final BigDecimal distance = routeDistance.execute(uploadModel);
-        if (BigDecimal.ZERO.equals(distance)) {
+        if (distance == null) {
             //Corrupted data, don't save route
             return;
         }

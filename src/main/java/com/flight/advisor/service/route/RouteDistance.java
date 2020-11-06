@@ -25,7 +25,7 @@ public class RouteDistance {
         final Airport destinationAirport = getDestinationAirport(route);
 
         if (sourceAirport == null || destinationAirport == null) {
-            return BigDecimal.ZERO;
+            return null;
         }
 
         final double lat1 = sourceAirport.getLatitude().doubleValue();
