@@ -36,4 +36,6 @@ public class Route extends BaseEntity {
     private String equipment;
 
     private BigDecimal price;
+
+    private BigDecimal distance;
 }

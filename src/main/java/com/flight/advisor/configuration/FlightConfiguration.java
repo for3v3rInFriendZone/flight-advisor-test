@@ -1,7 +1,9 @@
 package com.flight.advisor.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @Configuration
-public class BeanConfiguration {
+@EnableAsync
+public class FlightConfiguration {
 }

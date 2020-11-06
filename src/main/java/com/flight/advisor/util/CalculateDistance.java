@@ -8,6 +8,8 @@ import java.math.RoundingMode;
 @UtilityClass
 public class CalculateDistance {
 
+    private static final int DISTANCE_ROUNDING_VALUE = 2;
+
     public static BigDecimal calculate(double lat1, double lat2, double lon1,
                                       double lon2, double alt1, double alt2) {
 
@@ -28,6 +30,6 @@ public class CalculateDistance {
         final double result = Math.sqrt(distance) / 1000;
 
         return BigDecimal.valueOf(result)
-                .setScale(0, RoundingMode.HALF_UP);
+                .setScale(DISTANCE_ROUNDING_VALUE, RoundingMode.HALF_UP);
     }
 }

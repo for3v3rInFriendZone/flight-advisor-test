@@ -22,7 +22,6 @@ public class RouteDataHandler {
 
         return getDataFromFile.execute(file).stream()
                 .map(this::toRouteUploadModel)
-                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 

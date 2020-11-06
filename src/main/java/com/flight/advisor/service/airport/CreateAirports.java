@@ -2,10 +2,10 @@ package com.flight.advisor.service.airport;
 
 import com.flight.advisor.model.Airport;
 import com.flight.advisor.model.City;
-import com.flight.advisor.repository.AirportRepository;
-import com.flight.advisor.repository.CityRepository;
+import com.flight.advisor.service.city.CreateCityAsync;
 import com.flight.advisor.service.upload.airport.AirportUploadModel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +16,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class CreateAirports {
 
-    private final CityRepository cityRepository;
-    private final AirportRepository airportRepository;
+    private final CreateCityAsync createCityAsync;
+    private final CreateAirportAsync createAirportAsync;
 
     public void execute(List<AirportUploadModel> airports) {
         final List<City> citiesToSave = airports.stream()
@@ -30,8 +31,15 @@ public class CreateAirports {
                 .map(this::toAirport)
                 .collect(Collectors.toList());
 
-        cityRepository.saveAll(citiesToSave);
-        airportRepository.saveAll(airportsToSave);
+        for (City city : citiesToSave) {
+            createCityAsync.execute(city);
+        }
+
+        for (Airport airport : airportsToSave) {
+            createAirportAsync.execute(airport);
+        }
+
+        log.info("Airports upload finished successfully.");
     }
 
     private City toCity(AirportUploadModel airportUploadModel) {
