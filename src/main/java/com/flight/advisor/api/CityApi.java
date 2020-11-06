@@ -41,12 +41,13 @@ public class CityApi {
     private final FindCitiesByNameWithComments findCitiesByNameWithComments;
 
     @GetMapping
-    @PreAuthorize("@userTypePermission.hasAny('REGULAR')")
+    @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
     public List<CityResponse> getAllCities(@RequestParam(required = false) Integer commentsLimit) {
         return getAllCitiesWithComments.execute(commentsLimit);
     }
 
     @GetMapping("/search")
+    @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
     public List<CityResponse> findAllCitiesByName(@RequestParam String name,
                                                   @RequestParam(required = false) Integer commentsLimit) {
         return findCitiesByNameWithComments.execute(name, commentsLimit);
@@ -54,6 +55,7 @@ public class CityApi {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userTypePermission.hasAny('ADMIN')")
     public CreateCityResponse createCity(@RequestBody @Valid CreateCityRequest createCityRequest) {
         final City createdCity = createCity.execute(CityConverter.toCityFromCreateRequest(createCityRequest));
 
@@ -62,6 +64,7 @@ public class CityApi {
 
     @PostMapping("/{cityId}/comment")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
     public CreateCommentResponse createComment(@PathVariable UUID cityId, @RequestBody @Valid CreateCommentRequest createCommentRequest) {
         final Comment newComment = createComment.execute(CommentConverter.toCommentFromCreateComment(createCommentRequest), cityId);
 
