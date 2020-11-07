@@ -7,15 +7,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class FindAirportByCityName {
+public class FindAirportsByCityName {
 
     private final AirportRepository airportRepository;
 
-    public Airport execute(String city) {
-        return airportRepository.findByCity(city)
-                .orElseThrow(() -> new AirportNotFoundForCityException(city));
+    public List<Airport> execute(String city) {
+        final List<Airport> airports = airportRepository.findAllByCity(city);
+
+        if (airports.isEmpty()) {
+            throw new AirportNotFoundForCityException(city);
+        }
+
+        return airports;
     }
 }

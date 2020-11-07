@@ -5,7 +5,7 @@ import com.flight.advisor.dto.city.FlightResponse;
 import com.flight.advisor.model.Airport;
 import com.flight.advisor.repository.AirportRepository;
 import com.flight.advisor.repository.RouteRepository;
-import com.flight.advisor.service.airport.FindAirportByCityName;
+import com.flight.advisor.service.airport.FindAirportsByCityName;
 import com.flight.advisor.util.GraphBuilderSingleton;
 import es.usc.citius.hipster.algorithm.Algorithm;
 import es.usc.citius.hipster.algorithm.Hipster;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -32,23 +33,32 @@ import static java.util.stream.Collectors.joining;
 @Transactional
 public class FindCheapestFlights {
 
-    private final FindAirportByCityName findAirportByCityName;
+    private final FindAirportsByCityName findAirportByCityName;
     private final AirportRepository airportRepository;
     private final RouteRepository routeRepository;
 
     public List<FlightResponse> execute(FlightRequest flightRequest) {
-        final Integer sourceAirportId = findAirportByCityName.execute(flightRequest.getSourceCity()).getId();
-        final Integer destinationAirportId = findAirportByCityName.execute(flightRequest.getDestinationCity()).getId();
+        final List<FlightResponse> response = new ArrayList<>();
+        final List<Airport> sourceAirports = findAirportByCityName.execute(flightRequest.getSourceCity());
+        final List<Airport> destinationAirports = findAirportByCityName.execute(flightRequest.getDestinationCity());
 
-        HipsterDirectedGraph<Integer, Double> graph = GraphBuilderSingleton.getInstance()
+        final HipsterDirectedGraph<Integer, Double> graph = GraphBuilderSingleton.getInstance()
                 .createDirectedGraph();
 
-        final SearchProblem search = getSearchProblem(graph, sourceAirportId);
-        final Iterator resultIterator = Hipster.createDijkstra(search).search(destinationAirportId)
-                .getGoalNodes()
-                .iterator();
+        for (Airport sourceAirport : sourceAirports) {
+            for (Airport destinationAirport : destinationAirports) {
+                final SearchProblem search = getSearchProblem(graph, sourceAirport.getId());
+                final Iterator resultIterator = Hipster.createDijkstra(search).search(destinationAirport.getId())
+                        .getGoalNodes()
+                        .iterator();
 
-        return toResponse(resultIterator);
+                addFlightToResponse(resultIterator, response);
+            }
+        }
+
+        return response.stream()
+                .sorted(Comparator.comparing(FlightResponse::getTotalPrice))
+                .collect(Collectors.toList());
     }
 
     private SearchProblem getSearchProblem(HipsterDirectedGraph<Integer, Double> graph, Integer source) {
@@ -59,21 +69,18 @@ public class FindCheapestFlights {
                 .build();
     }
 
-    private List<FlightResponse> toResponse(Iterator nodesIterator) {
-        final List<FlightResponse> response = new ArrayList<>();
-
+    private void addFlightToResponse(Iterator nodesIterator, List<FlightResponse> response) {
         while (nodesIterator.hasNext()) {
             final Node goalNode = (Node) nodesIterator.next();
             final List<Integer> citiesId = (List<Integer>) Algorithm.recoverStatePath(goalNode);
 
-            final String cityRoutes = citiesId.stream()
-                    .map(airportRepository::getOne)
-                    .collect(Collectors.toMap(Airport::getCity, Airport::getName))
-                    .entrySet().stream()
-                    .map(entry -> String.format("%s(%s)", entry.getKey(), entry.getValue()))
-                    .collect(joining(" --> "));
+            final String cityRoutes = getCityRoutes(citiesId);
+            final BigDecimal totalPrice = BigDecimal.valueOf((Double) ((WeightedNode) goalNode).getCost())
+                    .setScale(2, RoundingMode.HALF_UP);
 
-            final BigDecimal totalPrice = BigDecimal.valueOf((Double) ((WeightedNode) goalNode).getCost());
+            if (BigDecimal.ZERO.equals(totalPrice)) {
+                return;
+            }
 
             final FlightResponse flightResponse = FlightResponse.builder()
                     .routes(cityRoutes)
@@ -82,11 +89,14 @@ public class FindCheapestFlights {
 
             response.add(flightResponse);
         }
-
-        return response.stream()
-                .sorted(Comparator.comparing(FlightResponse::getTotalPrice))
-                .collect(Collectors.toList());
     }
 
-
+    private String getCityRoutes(List<Integer> citiesId) {
+        return citiesId.stream()
+                .map(airportRepository::getOne)
+                .collect(Collectors.toMap(Airport::getCity, Airport::getName))
+                .entrySet().stream()
+                .map(entry -> String.format("%s [%s]", entry.getKey(), entry.getValue()))
+                .collect(joining(" --> "));
+    }
 }
