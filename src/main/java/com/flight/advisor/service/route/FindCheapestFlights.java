@@ -42,11 +42,10 @@ public class FindCheapestFlights {
         final List<Airport> sourceAirports = findAirportByCityName.execute(flightRequest.getSourceCity());
         final List<Airport> destinationAirports = findAirportByCityName.execute(flightRequest.getDestinationCity());
 
-        final HipsterDirectedGraph<Integer, Double> graph = GraphBuilderSingleton.getInstance()
-                .createDirectedGraph();
-
         for (Airport sourceAirport : sourceAirports) {
             for (Airport destinationAirport : destinationAirports) {
+                final HipsterDirectedGraph<Integer, Double> graph = GraphBuilderSingleton.getInstance()
+                        .createDirectedGraph();
                 final SearchProblem search = getSearchProblem(graph, sourceAirport.getId());
                 final Iterator resultIterator = Hipster.createDijkstra(search).search(destinationAirport.getId())
                         .getGoalNodes()
@@ -78,7 +77,7 @@ public class FindCheapestFlights {
             final BigDecimal totalPrice = BigDecimal.valueOf((Double) ((WeightedNode) goalNode).getCost())
                     .setScale(2, RoundingMode.HALF_UP);
 
-            if (BigDecimal.ZERO.equals(totalPrice)) {
+            if (BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP).equals(totalPrice)) {
                 return;
             }
 
