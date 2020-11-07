@@ -4,7 +4,10 @@ import com.flight.advisor.model.Airport;
 import com.flight.advisor.repository.AirportRepository;
 import com.flight.advisor.service.upload.routes.RouteUploadModel;
 import com.flight.advisor.util.CalculateDistance;
+import com.flight.advisor.util.GraphBuilderSingleton;
+import es.usc.citius.hipster.graph.GraphBuilder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +16,7 @@ import java.math.BigDecimal;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class RouteDistance {
 
     private static final int IATA_CODE = 3;
@@ -37,7 +41,18 @@ public class RouteDistance {
         final double alt1 = fromFeetToMeters(sourceAirport.getAltitude().doubleValue());
         final double alt2 = fromFeetToMeters(destinationAirport.getAltitude().doubleValue());
 
-        return CalculateDistance.calculate(lat1, lat2, lon1, lon2, alt1, alt2);
+        final BigDecimal distance = CalculateDistance.calculate(lat1, lat2, lon1, lon2, alt1, alt2);
+
+        populateGraph(sourceAirport.getId(), destinationAirport.getId(), Double.parseDouble(route.getPrice()));
+        return distance;
+    }
+
+    private static synchronized void populateGraph(Integer sourceAirportId, Integer destinationAirportId, double price) {
+        final GraphBuilder<Integer, Double> graphBuilder = GraphBuilderSingleton.getInstance();
+
+        graphBuilder.connect(sourceAirportId).to(destinationAirportId).withEdge(price);
+
+        log.info("Route {} --> {} with edge: {}", sourceAirportId, destinationAirportId, price);
     }
 
     private Airport getSourceAirport(RouteUploadModel route) {

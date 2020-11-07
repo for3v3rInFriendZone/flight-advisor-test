@@ -10,7 +10,7 @@ public class CalculateDistance {
 
     private static final int DISTANCE_ROUNDING_VALUE = 2;
 
-    public static BigDecimal calculate(double lat1, double lat2, double lon1,
+    public BigDecimal calculate(double lat1, double lat2, double lon1,
                                       double lon2, double alt1, double alt2) {
 
         final int R = 6371; // Radius of the earth

@@ -15,8 +15,8 @@ import com.flight.advisor.service.city.CreateCity;
 import com.flight.advisor.service.city.FindCitiesByNameWithComments;
 import com.flight.advisor.service.city.GetAllCitiesWithComments;
 import com.flight.advisor.service.comment.CreateComment;
+import com.flight.advisor.util.GraphBuilderSingleton;
 import es.usc.citius.hipster.algorithm.Hipster;
-import es.usc.citius.hipster.graph.GraphBuilder;
 import es.usc.citius.hipster.graph.GraphSearchProblem;
 import es.usc.citius.hipster.graph.HipsterDirectedGraph;
 import es.usc.citius.hipster.model.problem.SearchProblem;
@@ -82,28 +82,16 @@ public class CityApi {
     @PostMapping("/flight")
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
     public List<FlightResponse> calculateCheapestFlight(FlightRequest flightRequest) {
-        HipsterDirectedGraph<String,Double> graph =
-                GraphBuilder.<String,Double>create()
-                        .connect("A").to("B").withEdge(3d)
-                        .connect("A").to("C").withEdge(5d)
-                        .connect("A").to("D").withEdge(10d)
-                        .connect("B").to("E").withEdge(8d)
-                        .connect("C").to("G").withEdge(2d)
-                        .connect("C").to("F").withEdge(10d)
-                        .connect("D").to("E").withEdge(3d)
-                        .connect("D").to("H").withEdge(2d)
-                        .connect("F").to("E").withEdge(1d)
-                        .connect("G").to("H").withEdge(3d)
-                        .connect("H").to("F").withEdge(4d)
-                        .connect("E").to("F").withEdge(4d)
-                        .createDirectedGraph();
+        HipsterDirectedGraph<Integer, Double> graph = GraphBuilderSingleton.getInstance()
+                .createDirectedGraph();
+
         SearchProblem p = GraphSearchProblem
-                .startingFrom("A")
+                .startingFrom(1678)
                 .in(graph)
                 .takeCostsFromEdges()
                 .build();
 
-        System.out.println(Hipster.createDijkstra(p).search("F"));
+        log.info("Here are the routes information: {}", Hipster.createDijkstra(p).search(1005));
         return null;
     }
 }

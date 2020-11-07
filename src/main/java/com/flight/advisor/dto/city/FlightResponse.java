@@ -11,5 +11,7 @@ public class FlightResponse {
 
     private BigDecimal totalPrice;
 
+    private BigDecimal totalDistance;
+
     private String routes;
 }
