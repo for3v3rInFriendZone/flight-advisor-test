@@ -78,7 +78,7 @@ public class FindCheapestFlights {
             final BigDecimal totalPrice = BigDecimal.valueOf((Double) ((WeightedNode) goalNode).getCost())
                     .setScale(2, RoundingMode.HALF_UP);
 
-            if (BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP).equals(totalPrice)) {
+            if (BigDecimal.ONE.compareTo(totalPrice) > 0) {
                 return;
             }
 

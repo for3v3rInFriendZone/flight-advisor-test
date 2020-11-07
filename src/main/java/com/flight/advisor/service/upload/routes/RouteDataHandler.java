@@ -22,10 +22,15 @@ public class RouteDataHandler {
 
         return getDataFromFile.execute(file).stream()
                 .map(this::toRouteUploadModel)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
     private RouteUploadModel toRouteUploadModel(String[] current) {
+        if (!isInteger(current[3]) || !isInteger(current[5])) {
+            return null;
+        }
+
         return RouteUploadModel.builder()
                 .airlineCode(current[0])
                 .airlineId(current[1])
@@ -38,5 +43,14 @@ public class RouteDataHandler {
                 .equipment(current[8])
                 .price(current[9])
                 .build();
+    }
+
+    private boolean isInteger(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
     }
 }
