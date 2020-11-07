@@ -41,13 +41,14 @@ public class FindCheapestFlights {
         final List<FlightResponse> response = new ArrayList<>();
         final List<Airport> sourceAirports = findAirportByCityName.execute(flightRequest.getSourceCity());
         final List<Airport> destinationAirports = findAirportByCityName.execute(flightRequest.getDestinationCity());
+        final HipsterDirectedGraph<Integer, Double> graph = GraphBuilderSingleton.getInstance()
+                .createDirectedGraph();
 
         for (Airport sourceAirport : sourceAirports) {
             for (Airport destinationAirport : destinationAirports) {
-                final HipsterDirectedGraph<Integer, Double> graph = GraphBuilderSingleton.getInstance()
-                        .createDirectedGraph();
                 final SearchProblem search = getSearchProblem(graph, sourceAirport.getId());
-                final Iterator resultIterator = Hipster.createDijkstra(search).search(destinationAirport.getId())
+                final Iterator resultIterator = Hipster.createDijkstra(search)
+                        .search(destinationAirport.getId())
                         .getGoalNodes()
                         .iterator();
 
@@ -71,9 +72,9 @@ public class FindCheapestFlights {
     private void addFlightToResponse(Iterator nodesIterator, List<FlightResponse> response) {
         while (nodesIterator.hasNext()) {
             final Node goalNode = (Node) nodesIterator.next();
-            final List<Integer> citiesId = (List<Integer>) Algorithm.recoverStatePath(goalNode);
+            final List<Integer> airportsId = (List<Integer>) Algorithm.recoverStatePath(goalNode);
 
-            final String cityRoutes = getCityRoutes(citiesId);
+            final String cityRoutes = getCityRoutes(airportsId);
             final BigDecimal totalPrice = BigDecimal.valueOf((Double) ((WeightedNode) goalNode).getCost())
                     .setScale(2, RoundingMode.HALF_UP);
 
@@ -90,12 +91,10 @@ public class FindCheapestFlights {
         }
     }
 
-    private String getCityRoutes(List<Integer> citiesId) {
-        return citiesId.stream()
+    private String getCityRoutes(List<Integer> airportsId) {
+        return airportsId.stream()
                 .map(airportRepository::getOne)
-                .collect(Collectors.toMap(Airport::getCity, Airport::getName))
-                .entrySet().stream()
-                .map(entry -> String.format("%s [%s]", entry.getKey(), entry.getValue()))
+                .map(airport -> String.format("%s [%s]", airport.getCity(), airport.getName()))
                 .collect(joining(" --> "));
     }
 }
