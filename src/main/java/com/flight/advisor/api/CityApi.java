@@ -15,6 +15,7 @@ import com.flight.advisor.service.city.CreateCity;
 import com.flight.advisor.service.city.FindCitiesByNameWithComments;
 import com.flight.advisor.service.city.GetAllCitiesWithComments;
 import com.flight.advisor.service.comment.CreateComment;
+import com.flight.advisor.service.route.FindCheapestFlights;
 import com.flight.advisor.util.GraphBuilderSingleton;
 import es.usc.citius.hipster.algorithm.Hipster;
 import es.usc.citius.hipster.graph.GraphSearchProblem;
@@ -47,6 +48,7 @@ public class CityApi {
     private final CreateComment createComment;
     private final GetAllCitiesWithComments getAllCitiesWithComments;
     private final FindCitiesByNameWithComments findCitiesByNameWithComments;
+    private final FindCheapestFlights findCheapestFlights;
 
     @GetMapping
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
@@ -81,17 +83,7 @@ public class CityApi {
 
     @PostMapping("/flight")
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
-    public List<FlightResponse> calculateCheapestFlight(FlightRequest flightRequest) {
-        HipsterDirectedGraph<Integer, Double> graph = GraphBuilderSingleton.getInstance()
-                .createDirectedGraph();
-
-        SearchProblem p = GraphSearchProblem
-                .startingFrom(1678)
-                .in(graph)
-                .takeCostsFromEdges()
-                .build();
-
-        log.info("Here are the routes information: {}", Hipster.createDijkstra(p).search(1005));
-        return null;
+    public List<FlightResponse> calculateCheapestFlight(@RequestBody @Valid FlightRequest flightRequest) {
+        return findCheapestFlights.execute(flightRequest);
     }
 }
