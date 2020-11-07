@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class SaveRoute {
+public class CreateRouteAsync {
 
     private final RouteRepository routeRepository;
     private final RouteDistance routeDistance;

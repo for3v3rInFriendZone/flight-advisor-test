@@ -14,11 +14,11 @@ import java.util.List;
 @Slf4j
 public class CreateRoutes {
 
-    private final SaveRoute saveRoute;
+    private final CreateRouteAsync createRouteAsync;
 
     public void execute(List<RouteUploadModel> routes) {
         for (RouteUploadModel route : routes) {
-            saveRoute.execute(route);
+            createRouteAsync.execute(route);
         }
 
         log.info("Routes upload finished successfully.");
