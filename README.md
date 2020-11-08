@@ -25,22 +25,38 @@ java -jar target/advisor-0.0.1-SNAPSHOT.jar
 
 Above you can see `flight-advisor` database structure which can help you visualise what this small app can do.
 
-You can find `Postman.collections` file in this repository with all the requests predefined. \
-Use below list as a guide and explanations for endpoints.
+You will find `Postman.collections` file in this repository with all the requests predefined. \
+Use below explained endpoints as a guide.
 
 Currently, `root url` is set to `localhost:8080/api`
 
-- `POST /user` - Creates new `User` which has a `UserType` of `REGULAR`.
-- `POST /user/sign-in` - Login `User` returns a `Jws Token` which is used for all other APIs in `Authorization` header.
-- `GET /city` - Get all cities available. For each city, there is a list of comments, which can be paginated by providing `commentsLimit` as `Request param`.
+### Notable precondition 
+Since there are two `.txt` files provided - `airports.txt` and `routes.txt` which are used to populate all available airports and theirs possible routes, we should import them first by using following APIs:
+- `POST /upload/airports` - Upload `airports.txt` using this API (this will also create cities which are mentioned in this file). 
 
-```python
-import foobar
-
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
-```
+- `POST /upload/routes` - Upload `routes.txt` using this API (this will also populate graph for searching cheapest routes).    
+#
+**User**
+* `POST /user` - Creates new `User` which has a `UserType` of `REGULAR`.
+* `POST /user/sign-in` - Login `User` returns a `Jws Token` which is used for all other APIs in `Authorization` header.
+#
+**City**
+* `GET /city` - Get all cities available. For each city, there is a list of comments, which can be paginated. Comments are ordered by `created_date`. Since there can be a lot of imported cities, there is pagination for city as well.
+   * `commentsLimit` - Limit list of comments for city.
+   * `page` and `size` - Traditional pagination for getting all the cities. Default value is set to 
+   `0` and `200` respectively.
+* `GET /city/search` - Find all available cities by name. Paging is introduces here as well.
+   * `commentsLimit` - Limit list of comments for city. 
+   * `page` and `size` - Traditional pagination for getting all the cities. Default value is set to 
+   `0` and `200` respectively. 
+   * `name` - Name of city we are looking for.
+* `POST /city` - Creates new city. Only `UserType = ADMIN` can do this.
+* `POST /city/{id}/comment` - Creates new comment for a city.
+* `POST /city/flight` - Most important API in here. Provide precise names of `source` and `destination` cities and response will contain cheapest flights available.
+#
+**Comment**
+* `PATCH /comment/{id}` - Update provided comment with new text.
+* `DELETE /comment/{id}` - Delete provided comment.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
