@@ -4,7 +4,7 @@ import com.flight.advisor.dto.city.CityResponse;
 import com.flight.advisor.model.City;
 import com.flight.advisor.model.Comment;
 import com.flight.advisor.repository.CommentRepository;
-import com.flight.advisor.service.util.TestsHelper;
+import com.flight.advisor.util.TestsHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

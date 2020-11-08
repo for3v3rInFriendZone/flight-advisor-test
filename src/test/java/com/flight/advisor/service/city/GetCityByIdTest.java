@@ -3,7 +3,7 @@ package com.flight.advisor.service.city;
 import com.flight.advisor.exception.city.CityNotFoundException;
 import com.flight.advisor.model.City;
 import com.flight.advisor.repository.CityRepository;
-import com.flight.advisor.service.util.TestsHelper;
+import com.flight.advisor.util.TestsHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,7 +28,7 @@ class GetCityByIdTest {
     private GetCityById getCityById;
 
     @Test
-    void getCityById_IdValue_ReturnsCityWithProvidedId() {
+    void getCityById_CityId_ReturnsCityWithProvidedId() {
         // Setup
         final UUID id = UUID.randomUUID();
         final City city = TestsHelper.getCity();
@@ -46,16 +46,13 @@ class GetCityByIdTest {
     }
 
     @Test
-    void getCityById_IdValue_ThrowsCityNotFoundException() {
+    void getCityById_CityId_ThrowsCityNotFoundException() {
         // Setup
-        final UUID id = UUID.randomUUID();
-        final City city = TestsHelper.getCity();
-        city.setId(id);
 
         // Mocks
         when(cityRepository.findById(any(UUID.class))).thenThrow(new CityNotFoundException(UUID.randomUUID()));
 
-        // Act
+        // Act & Assert
         assertThrows(CityNotFoundException.class, () -> getCityById.execute(UUID.randomUUID()));
     }
 }

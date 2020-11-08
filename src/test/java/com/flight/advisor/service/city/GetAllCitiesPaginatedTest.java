@@ -2,7 +2,7 @@ package com.flight.advisor.service.city;
 
 import com.flight.advisor.model.City;
 import com.flight.advisor.repository.CityRepository;
-import com.flight.advisor.service.util.TestsHelper;
+import com.flight.advisor.util.TestsHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

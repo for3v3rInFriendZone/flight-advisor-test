@@ -18,8 +18,8 @@ public class RouteDistance {
     private final AirportRepository airportRepository;
 
     public BigDecimal execute(RouteUploadModel route) {
-        final Airport sourceAirport = getSourceAirport(route);
-        final Airport destinationAirport = getDestinationAirport(route);
+        final Airport sourceAirport = getAirport(route.getSourceAirportId());
+        final Airport destinationAirport = getAirport(route.getDestinationAirportId());
 
         if (sourceAirport == null || destinationAirport == null) {
             return null;
@@ -37,15 +37,8 @@ public class RouteDistance {
         return CalculateDistance.calculate(lat1, lat2, lon1, lon2, alt1, alt2);
     }
 
-    private Airport getSourceAirport(RouteUploadModel route) {
-        final Integer airportId = Integer.parseInt(route.getSourceAirportId());
-
-        return airportRepository.findById(airportId)
-                .orElse(null);
-    }
-
-    private Airport getDestinationAirport(RouteUploadModel route) {
-        final Integer airportId = Integer.parseInt(route.getDestinationAirportId());
+    private Airport getAirport(String id) {
+        final Integer airportId = Integer.parseInt(id);
 
         return airportRepository.findById(airportId)
                 .orElse(null);

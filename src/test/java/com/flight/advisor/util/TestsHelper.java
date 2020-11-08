@@ -1,9 +1,12 @@
-package com.flight.advisor.service.util;
+package com.flight.advisor.util;
 
+import com.flight.advisor.model.Airport;
 import com.flight.advisor.model.City;
 import com.flight.advisor.model.Comment;
+import com.flight.advisor.service.upload.routes.RouteUploadModel;
 import lombok.experimental.UtilityClass;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -66,5 +69,28 @@ public class TestsHelper {
                 .build();
 
         return List.of(comment1, comment2, comment3);
+    }
+
+    public RouteUploadModel getRouteModel(String airport1, String airport2) {
+        return RouteUploadModel.builder()
+                .sourceAirportId(airport1)
+                .destinationAirportId(airport2)
+                .build();
+    }
+
+    public List<Airport> getAirports() {
+        final Airport airport1 = Airport.builder()
+                .latitude(BigDecimal.valueOf(45.267136))
+                .longitude(BigDecimal.valueOf(19.833549))
+                .altitude(5)
+                .build();
+
+        final Airport airport2 = Airport.builder()
+                .latitude(BigDecimal.valueOf(44.786568))
+                .longitude(BigDecimal.valueOf(20.448921))
+                .altitude(50)
+                .build();
+
+        return List.of(airport1, airport2);
     }
 }

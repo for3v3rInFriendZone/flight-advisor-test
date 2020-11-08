@@ -53,7 +53,7 @@ public class CreateRouteAsync {
         routeRepository.save(route);
     }
 
-    private static synchronized void populateGraph(String sourceAirportId, String destinationAirportId, double price) {
+    private synchronized void populateGraph(String sourceAirportId, String destinationAirportId, double price) {
         final Integer source = Integer.parseInt(sourceAirportId);
         final Integer destination = Integer.parseInt(destinationAirportId);
         final GraphBuilder<Integer, Double> graphBuilder = GraphBuilderSingleton.getInstance();

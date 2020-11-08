@@ -1,5 +1,6 @@
 package com.flight.advisor.service.comment;
 
+import com.flight.advisor.exception.comment.CommentNotFoundException;
 import com.flight.advisor.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,11 @@ public class RemoveComment {
     public void execute(UUID commentId) {
         log.info("Trying to delete a comment with an Id: {}", commentId);
 
-        commentRepository.deleteById(commentId);
+        if (!commentRepository.existsById(commentId)) {
+            throw new CommentNotFoundException(commentId);
+        }
 
+        commentRepository.deleteById(commentId);
         log.info("Comment successfully deleted");
     }
 }
