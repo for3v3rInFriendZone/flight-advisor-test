@@ -21,6 +21,10 @@ java -jar target/advisor-0.0.1-SNAPSHOT.jar
 
 ## Usage
 
+![user](https://user-images.githubusercontent.com/16151417/98465160-98298b00-21c7-11eb-9500-f8cfea2947c7.png)
+
+Above you can see `flight-advisor` database structure which can help you visualise what this small app can do.
+
 You can find `Postman.collections` file in this repository with all the requests predefined. \
 Use below list as a guide and explanations for endpoints.
 
