@@ -1,5 +1,6 @@
 package com.flight.advisor.dto.city;
 
+import com.flight.advisor.util.Constants;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -9,14 +10,14 @@ import javax.validation.constraints.Size;
 public class CreateCityRequest {
 
     @NotBlank(message = "city.name.blank")
-    @Size(max = 100, message = "city.name.size")
+    @Size(max = Constants.CITY_NAME_MAX_SIZE, message = "city.name.size")
     private String name;
 
     @NotBlank(message = "city.country.blank")
-    @Size(max = 100, message = "city.country.size")
+    @Size(max = Constants.COUNTRY_NAME_MAX_SIZE, message = "city.country.size")
     private String country;
 
     @NotBlank(message = "city.description.blank")
-    @Size(max = 1000, message = "city.description.size")
+    @Size(max = Constants.CITY_DESCRIPTION_MAX_SIZE, message = "city.description.size")
     private String description;
 }
