@@ -25,13 +25,13 @@ java -jar target/advisor-0.0.1-SNAPSHOT.jar
 
 Above you can see `flight-advisor` database structure which can help you visualise what this small app can do.
 
-You will find `Postman.collections` file in this repository with all the requests predefined. \
+Inside `files` folder you will find `flight-advisor.postman_collection.json` file for this app with all the requests predefined. \
 Use below explained endpoints as a guide.
 
 Currently, `root url` is set to `localhost:8080/api`
 
 ### Notable precondition 
-Since there are two `.txt` files provided - `airports.txt` and `routes.txt` which are used to populate all available airports and theirs possible routes, we should import them first by using following APIs:
+Since there are two `.txt` files provided - `files/airports.txt` and `files/routes.txt` which are used to populate all available airports and theirs possible routes, we should import them first by using following APIs:
 - `POST /upload/airports` - Upload `airports.txt` using this API (this will also create cities which are mentioned in this file). 
 
 - `POST /upload/routes` - Upload `routes.txt` using this API (this will also populate graph for searching cheapest routes).    
