@@ -74,11 +74,11 @@ public class CityApi {
         return CityConverter.toCreateCityResponse(createdCity.getId());
     }
 
-    @PostMapping("/{cityId}/comment")
+    @PostMapping("/{id}/comment")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
-    public CreateCommentResponse createComment(@PathVariable UUID cityId, @RequestBody @Valid CreateCommentRequest createCommentRequest) {
-        final Comment newComment = createComment.execute(CommentConverter.toCommentFromCreateComment(createCommentRequest), cityId);
+    public CreateCommentResponse createComment(@PathVariable UUID id, @RequestBody @Valid CreateCommentRequest createCommentRequest) {
+        final Comment newComment = createComment.execute(CommentConverter.toCommentFromCreateComment(createCommentRequest), id);
 
         return CommentConverter.toCreateCommentResponse(newComment);
     }

@@ -9,11 +9,11 @@ import javax.validation.constraints.Size;
 @Getter
 public class FlightRequest {
 
-    @NotBlank
-    @Size(max = 200)
+    @NotBlank(message = "city.name.blank")
+    @Size(max = 100, message = "city.name.size")
     private String sourceCity;
 
-    @NotBlank
-    @Size(max = 200)
+    @NotBlank(message = "city.name.blank")
+    @Size(max = 100, message = "city.name.size")
     private String destinationCity;
 }

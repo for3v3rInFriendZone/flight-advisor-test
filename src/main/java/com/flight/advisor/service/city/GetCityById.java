@@ -19,7 +19,7 @@ public class GetCityById {
     private final CityRepository cityRepository;
 
     public City execute(UUID id) {
-        log.info("Trying to get city by id: {}", id);
+        log.info("Getting city by id: {}", id);
 
         return cityRepository.findById(id)
                 .orElseThrow(() -> new CityNotFoundException(id));

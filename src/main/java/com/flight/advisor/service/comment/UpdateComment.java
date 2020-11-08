@@ -24,7 +24,9 @@ public class UpdateComment {
         final Comment oldComment = getCommentById.execute(id);
 
         oldComment.setText(text);
+        final Comment updatedComment = commentRepository.save(oldComment);
 
-        return commentRepository.save(oldComment);
+        log.info("Comment updated successfuly to: {}", text);
+        return updatedComment;
     }
 }

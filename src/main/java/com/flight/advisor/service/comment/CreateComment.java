@@ -26,6 +26,9 @@ public class CreateComment {
         final City city = getCityById.execute(cityId);
 
         comment.setCity(city);
-        return commentRepository.save(comment);
+        final Comment newComment = commentRepository.save(comment);
+        log.info("Comment created: {} for city: {}", newComment.getId(), cityId);
+
+        return newComment;
     }
 }

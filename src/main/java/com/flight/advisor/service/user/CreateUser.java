@@ -19,6 +19,8 @@ public class CreateUser {
     private final PasswordEncoder passwordEncoder;
 
     public User execute(User user) {
+        log.info("Trying to register new user * {} *", user.getUsername());
+
         if (isUsernameTaken(user.getUsername())) {
             throw new UsernameAlreadyTakenException(user.getUsername());
         }
@@ -27,7 +29,10 @@ public class CreateUser {
         user.setType(User.UserType.REGULAR);
         user.setPassword(hashedPassword);
 
-        return userRepository.save(user);
+        final User newUser = userRepository.save(user);
+
+        log.info("User: * {} * was successfully created.", user.getUsername());
+        return newUser;
     }
 
     private boolean isUsernameTaken(String username) {

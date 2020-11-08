@@ -7,6 +7,7 @@ import com.flight.advisor.dto.comment.CommentResponse;
 import com.flight.advisor.model.City;
 import com.flight.advisor.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,12 +17,16 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class GetAllCitiesWithComments {
 
     private final GetAllCities getAllCities;
     private final CommentRepository commentRepository;
 
     public List<CityResponse> execute(Integer page, Integer size, Integer commentsLimit) {
+        log.info("Getting all cities ** [page: {}, size: {}, commentsLimit: {}] **",
+                page, size, commentsLimit);
+
         return getAllCities.getAllPaginated(page, size).stream()
                 .map(city -> createCityResponse(city, commentsLimit))
                 .collect(Collectors.toList());

@@ -20,5 +20,7 @@ public class RemoveComment {
         log.info("Trying to delete a comment with an Id: {}", commentId);
 
         commentRepository.deleteById(commentId);
+
+        log.info("Comment successfully deleted");
     }
 }

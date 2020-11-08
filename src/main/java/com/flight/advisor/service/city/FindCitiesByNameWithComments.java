@@ -24,6 +24,9 @@ public class FindCitiesByNameWithComments {
     private final CommentRepository commentRepository;
 
     public List<CityResponse> execute(String name, Integer commentsLimit, Integer page, Integer size) {
+        log.info("Getting all cities by provided name: {} ** [page: {}, size: {}, commentsLimit: {}] **",
+                name, page, size, commentsLimit);
+
         return findCitiesByName.execute(name, page, size).stream()
                 .map(city -> createCityResponse(city, commentsLimit))
                 .collect(Collectors.toList());
