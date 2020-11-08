@@ -21,6 +21,6 @@ public class GetAllCities {
         final Integer limit = size;
         final Integer offset = page * size;
 
-        return cityRepository.findAllPaginated(limit, offset);
+        return cityRepository.getAllPaginated(limit, offset);
     }
 }

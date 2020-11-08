@@ -49,17 +49,20 @@ public class CityApi {
     @GetMapping
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
     public List<CityResponse> getAllCities(
-            @RequestParam(name = Constants.PAGE, required = false, defaultValue = Constants.DEFAULT_PAGE) Integer page,
-            @RequestParam(name = Constants.SIZE, required = false, defaultValue = Constants.MAX_PAGE_SIZE) Integer size,
-            @RequestParam(required = false) Integer commentsLimit) {
+            @RequestParam(required = false, defaultValue = Constants.DEFAULT_PAGE) Integer page,
+            @RequestParam(required = false, defaultValue = Constants.MAX_PAGE_SIZE) Integer size,
+            @RequestParam(required = false, defaultValue = Constants.DEFAULT_SIZE_COMMENT) Integer commentsLimit) {
         return getAllCitiesWithComments.execute(page, size, commentsLimit);
     }
 
     @GetMapping("/search")
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
-    public List<CityResponse> findAllCitiesByName(@RequestParam String name,
-                                                  @RequestParam(required = false) Integer commentsLimit) {
-        return findCitiesByNameWithComments.execute(name, commentsLimit);
+    public List<CityResponse> findAllCitiesByName(
+            @RequestParam String name,
+            @RequestParam(required = false, defaultValue = Constants.DEFAULT_PAGE) Integer page,
+            @RequestParam(required = false, defaultValue = Constants.MAX_PAGE_SIZE) Integer size,
+            @RequestParam(required = false, defaultValue = Constants.DEFAULT_SIZE_COMMENT) Integer commentsLimit) {
+        return findCitiesByNameWithComments.execute(name, commentsLimit, page, size);
     }
 
     @PostMapping

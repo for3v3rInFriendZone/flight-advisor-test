@@ -23,8 +23,8 @@ public class FindCitiesByNameWithComments {
     private final FindCitiesByName findCitiesByName;
     private final CommentRepository commentRepository;
 
-    public List<CityResponse> execute(String name, Integer commentsLimit) {
-        return findCitiesByName.execute(name).stream()
+    public List<CityResponse> execute(String name, Integer commentsLimit, Integer page, Integer size) {
+        return findCitiesByName.execute(name, page, size).stream()
                 .map(city -> createCityResponse(city, commentsLimit))
                 .collect(Collectors.toList());
     }
