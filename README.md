@@ -58,10 +58,10 @@ Since there are two `.txt` files provided - `files/airports.txt` and `files/rout
 * `PATCH /comment/{id}` - Update provided comment with new text.
 * `DELETE /comment/{id}` - Delete provided comment.
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
+## Notable mention
+**Internationalisation** is also implemented in this application. \
+Currently available translations are on English `en` (this is a default) and on Serbian `sr`. \
+Just add `Accept-Language` Header in order to see translated messages.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+N/A - Intended for demonstration purposes.
