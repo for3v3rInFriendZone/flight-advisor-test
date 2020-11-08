@@ -16,11 +16,7 @@ import com.flight.advisor.service.city.FindCitiesByNameWithComments;
 import com.flight.advisor.service.city.GetAllCitiesWithComments;
 import com.flight.advisor.service.comment.CreateComment;
 import com.flight.advisor.service.route.FindCheapestFlights;
-import com.flight.advisor.util.GraphBuilderSingleton;
-import es.usc.citius.hipster.algorithm.Hipster;
-import es.usc.citius.hipster.graph.GraphSearchProblem;
-import es.usc.citius.hipster.graph.HipsterDirectedGraph;
-import es.usc.citius.hipster.model.problem.SearchProblem;
+import com.flight.advisor.util.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -52,8 +48,11 @@ public class CityApi {
 
     @GetMapping
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
-    public List<CityResponse> getAllCities(@RequestParam(required = false) Integer commentsLimit) {
-        return getAllCitiesWithComments.execute(commentsLimit);
+    public List<CityResponse> getAllCities(
+            @RequestParam(name = Constants.PAGE, required = false, defaultValue = Constants.DEFAULT_PAGE) Integer page,
+            @RequestParam(name = Constants.SIZE, required = false, defaultValue = Constants.MAX_PAGE_SIZE) Integer size,
+            @RequestParam(required = false) Integer commentsLimit) {
+        return getAllCitiesWithComments.execute(page, size, commentsLimit);
     }
 
     @GetMapping("/search")

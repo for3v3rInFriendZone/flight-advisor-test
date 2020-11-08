@@ -16,9 +16,3 @@ CREATE TABLE airport
     type              VARCHAR(200),
     source            VARCHAR(200)
 );
-
-CREATE INDEX airport_iata_idx
-ON airport(iata);
-
-CREATE INDEX airport_icao_idx
-    ON airport(icao);

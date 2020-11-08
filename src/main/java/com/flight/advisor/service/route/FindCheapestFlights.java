@@ -72,12 +72,12 @@ public class FindCheapestFlights {
     private void addFlightToResponse(Iterator nodesIterator, List<FlightResponse> response) {
         while (nodesIterator.hasNext()) {
             final Node goalNode = (Node) nodesIterator.next();
-            final List<Integer> airportsId = (List<Integer>) Algorithm.recoverStatePath(goalNode);
 
+            final List<Integer> airportsId = (List<Integer>) Algorithm.recoverStatePath(goalNode);
             final String cityRoutes = getCityRoutes(airportsId);
+
             final BigDecimal totalPrice = BigDecimal.valueOf((Double) ((WeightedNode) goalNode).getCost())
                     .setScale(2, RoundingMode.HALF_UP);
-
             if (BigDecimal.ONE.compareTo(totalPrice) > 0) {
                 return;
             }

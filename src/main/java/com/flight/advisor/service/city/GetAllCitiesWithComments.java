@@ -21,8 +21,8 @@ public class GetAllCitiesWithComments {
     private final GetAllCities getAllCities;
     private final CommentRepository commentRepository;
 
-    public List<CityResponse> execute(Integer commentsLimit) {
-        return getAllCities.execute().stream()
+    public List<CityResponse> execute(Integer page, Integer size, Integer commentsLimit) {
+        return getAllCities.getAllPaginated(page, size).stream()
                 .map(city -> createCityResponse(city, commentsLimit))
                 .collect(Collectors.toList());
     }

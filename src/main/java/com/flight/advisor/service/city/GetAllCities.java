@@ -17,7 +17,10 @@ public class GetAllCities {
 
     private final CityRepository cityRepository;
 
-    public List<City> execute() {
-        return cityRepository.findAll();
+    public List<City> getAllPaginated(Integer page, Integer size) {
+        final Integer limit = size;
+        final Integer offset = page * size;
+
+        return cityRepository.findAllPaginated(limit, offset);
     }
 }
