@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
@@ -78,17 +79,38 @@ public class FindCheapestFlights {
 
             final BigDecimal totalPrice = BigDecimal.valueOf((Double) ((WeightedNode) goalNode).getCost())
                     .setScale(2, RoundingMode.HALF_UP);
-            if (BigDecimal.ONE.compareTo(totalPrice) > 0) {
+            if (BigDecimal.ONE.compareTo(totalPrice) > 0 || airportsId.size() > 7) {
                 return;
             }
 
             final FlightResponse flightResponse = FlightResponse.builder()
                     .routes(cityRoutes)
                     .totalPrice(totalPrice)
+                    .totalDistance(getTotalDistance(airportsId))
                     .build();
 
             response.add(flightResponse);
         }
+    }
+
+    private BigDecimal getTotalDistance(List<Integer> airportsId) {
+        final ListIterator<Integer> iterator = airportsId.listIterator();
+        double distance = 0;
+
+        while (iterator.hasNext()) {
+            final Integer currentId = iterator.next();
+            final Integer nextId = iterator.nextIndex();
+            if (iterator.nextIndex() == airportsId.size()) {
+                break;
+            }
+
+            final Integer nextAirportId = airportsId.get(nextId);
+            final Double resultDistance = routeRepository.getRouteDistance(currentId, nextAirportId).get(0); // Distance is always the same!
+
+            distance += resultDistance;
+        }
+
+        return BigDecimal.valueOf(distance).setScale(2, RoundingMode.HALF_UP);
     }
 
     private String getCityRoutes(List<Integer> airportsId) {

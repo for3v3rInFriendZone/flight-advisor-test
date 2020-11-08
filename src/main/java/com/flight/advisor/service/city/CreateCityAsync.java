@@ -19,10 +19,6 @@ public class CreateCityAsync {
 
     @Async
     public void execute(City city) {
-        log.info("Trying to create city: {}", city.getName());
-
         cityRepository.save(city);
-
-        log.info("Successfully created new city: {}", city.getName());
     }
 }

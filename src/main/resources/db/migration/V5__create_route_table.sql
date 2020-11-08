@@ -14,3 +14,9 @@ CREATE TABLE route
     price                    DECIMAL(8, 2)  NOT NULL,
     distance                 DECIMAL(10, 2) NOT NULL
 );
+
+CREATE INDEX route_source_airport_id_idx
+    ON route (source_airport_id);
+
+CREATE INDEX route_destination_airport_code_idx
+    ON route (destination_airport_code);
