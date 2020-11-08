@@ -20,14 +20,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GetAllCitiesWithComments {
 
-    private final GetAllCities getAllCities;
+    private final GetAllCitiesPaginated getAllCities;
     private final CommentRepository commentRepository;
 
     public List<CityResponse> execute(Integer page, Integer size, Integer commentsLimit) {
         log.info("Getting all cities ** [page: {}, size: {}, commentsLimit: {}] **",
                 page, size, commentsLimit);
 
-        return getAllCities.getAllPaginated(page, size).stream()
+        return getAllCities.execute(page, size).stream()
                 .map(city -> createCityResponse(city, commentsLimit))
                 .collect(Collectors.toList());
     }

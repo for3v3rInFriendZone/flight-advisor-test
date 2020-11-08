@@ -13,11 +13,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class GetAllCities {
+public class GetAllCitiesPaginated {
 
     private final CityRepository cityRepository;
 
-    public List<City> getAllPaginated(Integer page, Integer size) {
+    public List<City> execute(Integer page, Integer size) {
         final Integer limit = size;
         final Integer offset = page * size;
 
