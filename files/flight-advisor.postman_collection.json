@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "d26de23c-84ef-4b5c-ae4b-afdc12065d7c",
+		"name": "flight-advisor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "City",
+			"item": [
+				{
+					"name": "Get all cities with comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/city?page=1&size=10&commentsLimit=5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"city"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "commentsLimit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find cities by name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/city/search?name=novi&page=0&size=10&commentsLenght=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"city",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "novi"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "commentsLenght",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create city",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Novi Sad\",\n    \"country\": \"Serbia\",\n    \"description\": \"This city is awesome\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/city",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"city"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new comment for city",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"Novi Sad is such an amazing city\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/city/05ab84c4-3cda-4afa-9e85-032b0cc8ff84/comment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"city",
+								"05ab84c4-3cda-4afa-9e85-032b0cc8ff84",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find cheapest flights",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "sr",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sourceCity\": \"Belgrade\",\n    \"destinationCity\": \"New York\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/city/flight",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"city",
+								"flight"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "Update comment for city",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"Novi Sad is such a beautiful city!!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/comment/723866ba-96f5-4636-8683-1cb9aed91a53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"comment",
+								"723866ba-96f5-4636-8683-1cb9aed91a53"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"Novi Sad is such a beautiful city!!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/comment/723866ba-96f5-4636-8683-1cb9aed91a53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"comment",
+								"723866ba-96f5-4636-8683-1cb9aed91a53"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "Upload airports",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/markostrisko/Desktop/Flight-advisor/airports.txt"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/upload/airports",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"upload",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload routes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/markostrisko/Desktop/Flight-advisor/routes.txt"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/upload/routes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"upload",
+								"routes"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Marko\",\n    \"lastName\": \"Strisko\",\n    \"username\": \"King_MaRteL\",\n    \"password\": \"root\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign in user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"King_MaRteL\",\n    \"password\": \"root\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/user/sign-in",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
