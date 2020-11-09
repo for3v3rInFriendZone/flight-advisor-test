@@ -494,6 +494,42 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Graph",
+			"item": [
+				{
+					"name": "Populate graph",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4NzQ1ZTAyZC0xZTEwLTRlMzYtYTcyMi01NDIwZDNiZjdkMzEiLCJ1c2VyX3R5cGUiOiJBRE1JTiIsImlhdCI6MTYwNDY3OTIzNSwiZXhwIjoxNjExODc5MjM1fQ.EqK5oQczUtil8fvaaC03gIsgzYeLW2o2WnXramBqXc4tFvYp9ZRYQ6wZeScAw-fnhLsuF4GjSLmQ3Mn_KgW4cw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/graph/populate",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"graph",
+								"populate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}
