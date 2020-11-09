@@ -30,12 +30,6 @@ public class CreateRouteAsync {
             return;
         }
 
-        populateGraph(
-                uploadModel.getSourceAirportId(),
-                uploadModel.getDestinationAirportId(),
-                Double.parseDouble(uploadModel.getPrice())
-        );
-
         final Route route = Route.builder()
                 .airlineCode(uploadModel.getAirlineCode())
                 .airlineId(uploadModel.getAirlineId())
@@ -51,15 +45,5 @@ public class CreateRouteAsync {
                 .build();
 
         routeRepository.save(route);
-    }
-
-    private synchronized void populateGraph(String sourceAirportId, String destinationAirportId, double price) {
-        final Integer source = Integer.parseInt(sourceAirportId);
-        final Integer destination = Integer.parseInt(destinationAirportId);
-        final GraphBuilder<Integer, Double> graphBuilder = GraphBuilderSingleton.getInstance();
-
-        graphBuilder.connect(source).to(destination).withEdge(price);
-
-        log.info("Route {} --> {} with edge: {}", source, destination, price);
     }
 }
