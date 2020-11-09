@@ -40,6 +40,10 @@ import java.util.UUID;
 @Slf4j
 public class CityApi {
 
+    private static final String SEARCH_BY_NAME_API = "search";
+    private static final String CREATE_COMMENT_API = "/{id}/comment";
+    private static final String FLIGHT_API = "/flight";
+
     private final CreateCity createCity;
     private final CreateComment createComment;
     private final GetAllCitiesWithComments getAllCitiesWithComments;
@@ -55,7 +59,7 @@ public class CityApi {
         return getAllCitiesWithComments.execute(page, size, commentsLimit);
     }
 
-    @GetMapping("/search")
+    @GetMapping(SEARCH_BY_NAME_API)
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
     public List<CityResponse> findAllCitiesByName(
             @RequestParam String name,
@@ -74,7 +78,7 @@ public class CityApi {
         return CityConverter.toCreateCityResponse(createdCity.getId());
     }
 
-    @PostMapping("/{id}/comment")
+    @PostMapping(CREATE_COMMENT_API)
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
     public CreateCommentResponse createComment(@PathVariable UUID id, @RequestBody @Valid CreateCommentRequest createCommentRequest) {
@@ -83,7 +87,7 @@ public class CityApi {
         return CommentConverter.toCreateCommentResponse(newComment);
     }
 
-    @PostMapping("/flight")
+    @PostMapping(FLIGHT_API)
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
     public List<FlightResponse> calculateCheapestFlight(@RequestBody @Valid FlightRequest flightRequest) {
         return findCheapestFlights.execute(flightRequest);

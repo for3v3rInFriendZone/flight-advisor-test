@@ -23,10 +23,12 @@ import javax.validation.Valid;
 @Slf4j
 public class UserApi {
 
+    private static final String SIGN_IN_API = "/sign-in";
+
     private final CreateUser createUser;
     private final SignInUser signInUser;
 
-    @PostMapping("/sign-in")
+    @PostMapping(SIGN_IN_API)
     public SignInResponse signIn(@RequestBody @Valid SignInRequest signInRequest) {
         return signInUser.execute(signInRequest);
     }

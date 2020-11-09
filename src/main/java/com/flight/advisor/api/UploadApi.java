@@ -24,12 +24,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UploadApi {
 
+    private static final String AIRPORTS_API = "/airports";
+    private static final String ROUTES_API = "/routes";
+
     private final AirportDataHandler airportDataHandler;
     private final CreateAirports createAirports;
     private final RouteDataHandler routeDataHandler;
     private final CreateRoutes createRoutes;
 
-    @PostMapping("/airports")
+    @PostMapping(AIRPORTS_API)
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@userTypePermission.hasAny('ADMIN')")
     public void uploadAirports(@RequestParam MultipartFile file) {
@@ -38,7 +41,7 @@ public class UploadApi {
         createAirports.execute(uploadedAirports);
     }
 
-    @PostMapping("/routes")
+    @PostMapping(ROUTES_API)
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@userTypePermission.hasAny('ADMIN')")
     public void uploadRoutes(@RequestParam MultipartFile file) {

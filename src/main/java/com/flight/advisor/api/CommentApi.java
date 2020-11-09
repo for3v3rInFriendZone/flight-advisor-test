@@ -25,17 +25,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CommentApi {
 
+    private static final String BY_ID_API = "/{id}";
+
     private final RemoveComment removeComment;
     private final UpdateComment updateComment;
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(BY_ID_API)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
     public void removeComment(@PathVariable UUID id) {
         removeComment.execute(id);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping(BY_ID_API)
     @PreAuthorize("@userTypePermission.hasAny('REGULAR', 'ADMIN')")
     public CommentResponse updateComment(@PathVariable UUID id, @RequestBody @Valid UpdateCommentRequest updateCommentRequest) {
         final Comment updatedComment = updateComment.execute(id, updateCommentRequest.getText());
