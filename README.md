@@ -32,9 +32,10 @@ Currently, `root url` is set to `localhost:8080/api`
 
 ### Notable precondition 
 Since there are two `.txt` files provided - `files/airports.txt` and `files/routes.txt` which are used to populate all available airports and their possible routes, we should import them first by using the following APIs:
-- `POST /upload/airports` - Upload `airports.txt` using this API (this will also create cities which are mentioned in this file). 
+* `POST /upload/airports` - Upload `airports.txt` using this API (this will also create cities which are mentioned in this file). 
+* `POST /upload/routes` - Upload `routes.txt` using this API.
+* `POST /graph/populate` - Populates `Graph` with routes.
 
-- `POST /upload/routes` - Upload `routes.txt` using this API (this will also populate graph for searching cheapest routes).    
 #
 **User**
 * `POST /user` - Creates new `User` which has `UserType` of `REGULAR`.
