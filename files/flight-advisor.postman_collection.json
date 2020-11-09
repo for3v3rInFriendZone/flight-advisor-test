@@ -24,7 +24,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/city?page=1&size=10&commentsLimit=5",
+							"raw": "localhost:8080/api/city?page=0&size=10&commentsLimit=5",
 							"host": [
 								"localhost"
 							],
@@ -36,7 +36,7 @@
 							"query": [
 								{
 									"key": "page",
-									"value": "1"
+									"value": "0"
 								},
 								{
 									"key": "size",
