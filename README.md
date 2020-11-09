@@ -11,8 +11,7 @@ Enter two cities: `source` and `destination` and the result will provide the che
 
 `Open Project` in any favourable IDEA and run it as `Spring application`. 
 
-On the other side, if you are an old fashioned kind of guy, you can use `terminal`. \
-Place yourself inside of `flight-advisor-test` and run:
+On the other side, if you prefer the `terminal`, just lace yourself inside of `flight-advisor-test` and run:
 
 ```bash
 mvn clean package
